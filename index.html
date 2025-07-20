@@ -4,42 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>素因数分解計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Roboto Mono', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow: hidden;
+            position: relative;
+        }
+        .background-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
         }
         .container {
             text-align: center;
-            padding: 2rem;
-            border-radius: 8px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2.5rem 3rem;
+            border-radius: 12px;
+            background-color: rgba(28, 28, 40, 0.85);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            z-index: 1;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00aaff;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
         }
         input {
-            padding: 0.5rem;
+            font-family: 'Roboto Mono', monospace;
+            padding: 0.8rem;
             margin-right: 0.5rem;
+            border: 1px solid #444;
+            background-color: #222;
+            color: #e0e0e0;
+            border-radius: 4px;
+            width: 200px;
         }
         button {
-            padding: 0.5rem 1rem;
+            font-family: 'Orbitron', sans-serif;
+            padding: 0.8rem 1.5rem;
             cursor: pointer;
+            border: none;
+            background: linear-gradient(45deg, #00aaff, #0055aa);
+            color: white;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            box-shadow: 0 0 15px #00aaff;
         }
         #result {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             font-weight: bold;
             min-height: 1.5em;
+            font-size: 1.2rem;
+            color: #39ff14; /* Neon green for the result */
         }
     </style>
 </head>
 <body>
+    <svg class="background-svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 600 600">
+        <defs>
+            <pattern id="pattern-circles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="20" cy="20" r="1" stroke="#00aaff" stroke-width="0.5" fill="none"></circle>
+            </pattern>
+            <text id="math-text" font-family="Roboto Mono" font-size="12" fill="#fff" opacity="0.5" transform="rotate(-30)">
+                2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37...
+            </text>
+        </defs>
+        <rect x="0" y="0" width="100%" height="100%" fill="#121212"></rect>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)"></rect>
+        <use href="#math-text" x="100" y="100"></use>
+        <use href="#math-text" x="400" y="200"></use>
+        <use href="#math-text" x="200" y="500"></use>
+        <use href="#math-text" x="50" y="350"></use>
+    </svg>
+
     <div class="container">
         <h1>素因数分解</h1>
-        <input type="number" id="numberInput" placeholder="整数を入力してください" min="2">
+        <input type="number" id="numberInput" placeholder="整数を入力" min="2">
         <button onclick="calculatePrimeFactors()">計算</button>
         <p id="result"></p>
     </div>
@@ -68,11 +126,13 @@
 
             if (isNaN(number) || number < 2) {
                 resultElement.textContent = '2以上の整数を入力してください。';
+                resultElement.style.color = '#ff4d4d'; // Error color
                 return;
             }
 
             const factors = primeFactorization(number);
-            resultElement.textContent = `結果: ${factors.join(', ')}`;
+            resultElement.textContent = `結果: ${factors.join(' x ')}`;
+            resultElement.style.color = '#39ff14'; // Success color
         }
     </script>
 </body>
