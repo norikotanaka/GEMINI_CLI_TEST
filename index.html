@@ -99,7 +99,9 @@
         <h1>素因数分解</h1>
         <input type="number" id="numberInput" placeholder="整数を入力" min="2">
         <button onclick="calculatePrimeFactors()">計算</button>
-        <p id="result"></p>
+        <div id="result">
+            <img src="prime_factorization_tree.svg" alt="素因数分解の例 (60 = 2x2x3x5)" style="width: 100%; max-width: 400px; opacity: 0.6; margin-top: 1.5rem; border-radius: 8px;">
+        </div>
     </div>
 
     <script>
@@ -120,19 +122,16 @@
         }
 
         function calculatePrimeFactors() {
-            const inputElement = document.getElementById('numberInput');
             const resultElement = document.getElementById('result');
-            const number = parseInt(inputElement.value, 10);
+            const number = parseInt(document.getElementById('numberInput').value, 10);
 
             if (isNaN(number) || number < 2) {
-                resultElement.textContent = '2以上の整数を入力してください。';
-                resultElement.style.color = '#ff4d4d'; // Error color
+                resultElement.innerHTML = '<p style="color: #ff4d4d;">2以上の整数を入力してください。</p>';
                 return;
             }
 
             const factors = primeFactorization(number);
-            resultElement.textContent = `結果: ${factors.join(' x ')}`;
-            resultElement.style.color = '#39ff14'; // Success color
+            resultElement.innerHTML = `<p style="color: #39ff14;">結果: ${factors.join(' x ')}</p>`;
         }
     </script>
 </body>
