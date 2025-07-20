@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素因数分解計算機</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        input {
+            padding: 0.5rem;
+            margin-right: 0.5rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 1rem;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>素因数分解</h1>
+        <input type="number" id="numberInput" placeholder="整数を入力してください" min="2">
+        <button onclick="calculatePrimeFactors()">計算</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function primeFactorization(n) {
+            const factors = [];
+            let d = 2;
+            while (d * d <= n) {
+                while (n % d === 0) {
+                    factors.push(d);
+                    n /= d;
+                }
+                d++;
+            }
+            if (n > 1) {
+                factors.push(n);
+            }
+            return factors;
+        }
+
+        function calculatePrimeFactors() {
+            const inputElement = document.getElementById('numberInput');
+            const resultElement = document.getElementById('result');
+            const number = parseInt(inputElement.value, 10);
+
+            if (isNaN(number) || number < 2) {
+                resultElement.textContent = '2以上の整数を入力してください。';
+                return;
+            }
+
+            const factors = primeFactorization(number);
+            resultElement.textContent = `結果: ${factors.join(', ')}`;
+        }
+    </script>
+</body>
+</html>
